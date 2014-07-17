@@ -46,7 +46,7 @@
 
 			this.element.on('mousedown', function() {
 				if (!self.complete) {
-					$(this).children("div.prog-bar").children(".meter").animate({ width: "100%" }, self.timer, function() {
+					$(this).children("div."+progBarClass).children(".meter").animate({ width: "100%" }, self.timer, function() {
 						self.complete = true;
 						if (self.callback != null) {
 							self.callback();
@@ -67,7 +67,7 @@
 	});
 
 	$(document).on('mouseup', function() {
-		$("div.prog-bar").children(".meter").each(function() {
+		$("div."+progBarClass).children(".meter").each(function() {
 			var $this = $(this);
 			$this.stop();
 			if ($this[0].style.width != "100%") {
