@@ -5,7 +5,7 @@ It's just a simple jquery plugin (still in developpement, many things to be adde
 
 ##How to use it
 
-If you're using Foundation (I guess you are) you already included **jquery** somewhere on your page, just include F2LCB under it !
+If you're using Foundation (I guess you are) you already included **jquery** somewhere on your page, just include F5LCB under it !
 
 ```html
 <script type="text/javascript" src="/js/vendor/jquery.js"></script>
