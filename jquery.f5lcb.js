@@ -62,18 +62,18 @@
 				}
 			});
 
+			$(document).on('mouseup', function() {
+				$("div."+self.progBarClass).children(".meter").each(function() {
+					var $this = $(this);
+					$this.stop();
+					if ($this[0].style.width != "100%") {
+						$this.css('width', 0);
+					}
+				});
+			});
+
 		}
 
-	});
-
-	$(document).on('mouseup', function() {
-		$("div."+self.progBarClass).children(".meter").each(function() {
-			var $this = $(this);
-			$this.stop();
-			if ($this[0].style.width != "100%") {
-				$this.css('width', 0);
-			}
-		});
 	});
 
 
