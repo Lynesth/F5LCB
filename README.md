@@ -36,7 +36,7 @@ $("#myButton").f5lcb({
 - **style**: (string) "top", "bottom" or "inner". Refers to the position of the progress bar. Default is "top".
 - **timer**: (int). How long in milliseconds should the button be hold to trigger the callback. Default is 1000.
 - **progBarClass**: (string). Class that will be used for the progress bar to allowed you to customize it. Default is "prog-bar".
-- **callback**: (function). Function that will be called when the button is pressed long enough.
+- **callback**: (function). Function that will be called when the button is pressed long enough. If no callback is provided, it will simply act like a click on the button, and will use the href attribute.
 
 
 ### What's to come :
