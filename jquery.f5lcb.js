@@ -48,12 +48,18 @@
 				if (!self.complete) {
 					$(this).children("div.prog-bar").children(".meter").animate({ width: "100%" }, self.timer, function() {
 						self.complete = true;
-						self.callback();
+						if (self.callback != null) {
+							self.callback();
+						} else {
+							self.element[0].click();
+						}
 						$(document).trigger('mouseup');
 					});
 				}
 			}).click(function() {
-				return false;
+				if (!self.complete || self.callback != null) {
+					return false;
+				}
 			});
 
 		}
