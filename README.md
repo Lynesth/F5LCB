@@ -5,6 +5,8 @@ It's just a simple jquery plugin (still in developpement, many things to be adde
 
 ##How to use it
 
+You can find a simple demonstration here : http://jsfiddle.net/H53RM/
+
 If you're using Foundation (I guess you are) you already included **jquery** somewhere on your page, just include F5LCB under it !
 
 ```html
