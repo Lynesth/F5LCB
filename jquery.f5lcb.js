@@ -84,9 +84,9 @@
 				if (self.progBar[0].style.width != "100%") {
 					if (self.resetOnMouseUp == false) {
 						var timer = (parseInt(self.progBar[0].style.width) * self.timer) / 100;
-						self.progBar.animate({ width: 0 }, timer);
+						self.progBar.animate({ width: "0%" }, timer);
 					} else {
-						self.progBar.css('width', 0);
+						self.progBar.css('width', "0%");
 					}
 				}
 			});
