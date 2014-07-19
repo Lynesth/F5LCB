@@ -21,7 +21,7 @@
 	F5LCB = clazz(Object, {
 
 
-		// Will think of a better way later ^^
+		// Will make a css and all
 		progBarStyle: {
 			top: "position: absolute; height: 0.625rem; top: 0; left: 0; width: 100%",
 			bottom: "position: absolute; height: 0.625rem; bottom: 0; left: 0; width: 100%; margin: 0",
@@ -36,27 +36,17 @@
 			self.element = options.element;
 			self.complete = false;
 
-			if (self.element.hasClass("tiny")) {
-				self.bClass = "tiny";
-			} else if (self.element.hasClass("small")) {
-				self.bClass = "small";
-			} else if (self.element.hasClass("large")) {
-				self.bClass = "large";
-			} else {
-				self.bClass = "default";
-			}
-
-
-			// allowed styles : "top", "bottom", "inner"
-			self.style = options.style || "top";
+			// allowed positions : "top", "bottom", "inner"
+			self.position = options.position || "top";
 			self.timer = options.timer || 1000;
 			self.callback = options.callback || null;
 			self.progBarClass = options.progBarClass || "prog-bar";
+			self.resetOnMouseUp = options.resetOnMouseUp === false ? false : true;
 
 
-			if (self.style != "inner") {
+			if (self.position != "inner") {
 				var rem = parseInt($('html').css('font-size'));
-				var diff = self.style == "top" ? 0.25 : -0.25;
+				var diff = self.position == "top" ? 0.25 : -0.25;
 				var padTop = parseInt(self.element.css('padding-top')) / rem + diff;
 				var padBottom = parseInt(self.element.css('padding-bottom')) / rem - diff;
 				self.element.css('padding-top', padTop.toString()+"rem")
@@ -64,12 +54,15 @@
 							.css('vertical-align', 'bottom');
 			}
 
-			self.element.append('<div class="progress '+self.progBarClass+'" style="'+self.progBarStyle[self.style]+'"><span class="meter" style="width: 0"></span></div>');
+			self.element.append('<div class="progress '+self.progBarClass+'" style="'+self.progBarStyle[self.position]+'"><span class="meter" style="width: 0"></span></div>');
+			self.progBar = self.element.children("div."+self.progBarClass).children('.meter');
 
 
-			this.element.on('mousedown', function() {
+			self.element.on('mousedown', function() {
 				if (!self.complete) {
-					$(this).children("div."+self.progBarClass).children(".meter").animate({ width: "100%" }, self.timer, function() {
+					var timer = self.resetOnMouseUp ? self.timer : ((100 - parseInt(self.progBar[0].style.width)) * self.timer) / 100;
+					self.progBar.stop();
+					self.progBar.animate({ width: "100%" }, timer, function() {
 						self.complete = true;
 						if (self.callback != null) {
 							self.callback();
@@ -78,22 +71,24 @@
 						}
 						$(document).trigger('mouseup');
 					});
-					return false;
+					return false; // Prevent draging and failed mouseup
 				}
 			}).click(function() {
 				if (!self.complete || self.callback != null) {
 					return false;
 				}
-			}).drag;
+			});
 
 			$(document).on('mouseup', function() {
-				$("div."+self.progBarClass).children(".meter").each(function() {
-					var $this = $(this);
-					$this.stop();
-					if ($this[0].style.width != "100%") {
-						$this.css('width', 0);
+				self.progBar.stop();
+				if (self.progBar[0].style.width != "100%") {
+					if (self.resetOnMouseUp == false) {
+						var timer = (parseInt(self.progBar[0].style.width) * self.timer) / 100;
+						self.progBar.animate({ width: 0 }, timer);
+					} else {
+						self.progBar.css('width', 0);
 					}
-				});
+				}
 			});
 
 		}

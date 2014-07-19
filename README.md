@@ -27,6 +27,7 @@ $("#myButton").f5lcb({
         style: "top",
         timer: 1000,
         progBarClass: "prog-bar",
+		resetOnMouseUp: true,
         callback: function() {
                 alert('This works !');
         }
@@ -35,9 +36,10 @@ $("#myButton").f5lcb({
 
 ##Allowed options :
 
-- **style**: (string) "top", "bottom" or "inner". Refers to the position of the progress bar. Default is "top".
+- **position**: (string) "top", "bottom" or "inner". Refers to the position of the progress bar. Default is "top".
 - **timer**: (int). How long in milliseconds should the button be hold to trigger the callback. Default is 1000.
 - **progBarClass**: (string). Class that will be used for the progress bar to allowed you to customize it. Default is "prog-bar".
+- **resetOnMouseUp**: (boolean). Whether the bar should directly go back to 0 if not completed on mouse up. Default is true.
 - **callback**: (function). Function that will be called when the button is pressed long enough. If no callback is provided, it will simply act like a click on the button, and will use the href attribute.
 
 
