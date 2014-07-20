@@ -5,7 +5,7 @@ It's just a simple jquery plugin (still in developpement, many things to be adde
 
 ##How to use it
 
-You can find a simple demonstration here : http://jsfiddle.net/PH27h/
+You can find a simple demonstration here : http://codepen.io/Lynesth/full/acokd/
 
 If you're using Foundation (I guess you are) you already included **jquery** somewhere on your page, just include F5LCB under it !
 
@@ -45,7 +45,8 @@ $("#myButton").f5lcb({
 
 ### What's to come :
 
-- Styling and colors according to the button class (secondary, success, alert, disabled)
+- Support for disabled state
+- Foundation-less version of the plugin with custom CSS
 - More things again I don't know what yet :)
 
 
