@@ -24,10 +24,10 @@ Javascript is as simple too :
 
 ```javascript
 $("#myButton").f5lcb({
-        style: "top",
+        position: "top",
         timer: 1000,
         progBarClass: "prog-bar",
-		resetOnMouseUp: true,
+        resetOnMouseUp: true,
         callback: function() {
                 alert('This works !');
         }
