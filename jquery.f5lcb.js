@@ -74,8 +74,8 @@
 					self.progBar.stop();
 					self.progBar.animate({ width: "100%" }, timer, function() {
 						self.complete = true;
-						if (self.callback != null) {
-							self.callback();
+						if (typeof self.callback === 'function') { 
+							self.callback(self.element, self.progBar);
 						} else {
 							self.element[0].click();
 						}
