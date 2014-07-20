@@ -39,8 +39,17 @@
 			// allowed positions : "top", "bottom", "inner"
 			self.position = options.position || "top";
 			self.timer = options.timer || 1000;
+
+			self.progBarClass = self.pBC = options.progBarClass || "prog-bar";
+			// propagate button classes to progress bar
+			var foundationClasses = ['secondary', 'alert', 'success', 'radius', 'round'];
+			for (var k = 0; k < foundationClasses.length; ++k) {
+				if (self.element.hasClass(foundationClasses[k])) {
+					self.pBC += " "+foundationClasses[k];
+				}
+			}
+
 			self.callback = options.callback || null;
-			self.progBarClass = options.progBarClass || "prog-bar";
 			self.resetOnMouseUp = options.resetOnMouseUp === false ? false : true;
 
 
@@ -53,8 +62,9 @@
 							.css('padding-bottom', padBottom.toString()+"rem")
 							.css('vertical-align', 'bottom');
 			}
+			self.element.css('overflow', 'hidden');
 
-			self.element.append('<div class="progress '+self.progBarClass+'" style="'+self.progBarStyle[self.position]+'"><span class="meter" style="width: 0"></span></div>');
+			self.element.append('<div class="progress '+self.pBC+'" style="'+self.progBarStyle[self.position]+'"><span class="meter" style="width: 0"></span></div>');
 			self.progBar = self.element.children("div."+self.progBarClass).children('.meter');
 
 
