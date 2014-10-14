@@ -50,9 +50,19 @@
 			}
 
 			self.tooltipShowing = false;
-			self.tooltipTTL = options.tooltipTTL || 2000;
-			self.showTooltip = options.showTooltip === false ? false : true;
-			self.tooltipText = options.tooltipText || "This button needs to be kept pressed in order to work !";
+			if (typeof options.tooltip == 'undefined') {
+				self.tooltip = {
+					'show': true,
+					'ttl': 2000,
+					'text': "This button needs to be kept pressed in order to work !"
+				}
+			} else {
+				self.tooltip = {
+					'show': typeof options.tooltip.show == 'boolean' ? options.tooltip.show : true,
+					'ttl': options.tooltip.ttl || 2000,
+					'text': options.tooltip.text || "This button needs to be kept pressed in order to work !"
+				}
+			}
 
 			self.callback = options.callback || null;
 			self.resetOnMouseUp = options.resetOnMouseUp === false ? false : true;
@@ -89,7 +99,8 @@
 					return false; // Prevent draging and failed mouseup
 				}
 			}).click(function(e) {
-				if (self.showTooltip && (parseInt(self.progBar[0].style.width) * self.timer) / 100 < 200) {
+				if (self.tooltip.show && (parseInt(self.progBar[0].style.width) * self.timer) / 100 < 100) {
+					e.preventDefault();
 					return self.getTooltip(self.element);
 				}
 				if (!self.complete || self.callback != null) {
@@ -115,19 +126,19 @@
 				if (!self.tooltipShowing) {
 					var offset = self.element.offset();
 					self.tooltipShowing = true;
-					self.tooltip = $('<div />', { class: "tooltip", text: self.tooltipText });
-					self.tooltip.css({
+					self.tooltip.element = $('<div />', { class: "tooltip", text: self.tooltip.text });
+					self.tooltip.element.css({
 						'top': offset.top + self.element.outerHeight() + 10,
 						'left': offset.left + 10,
 						'display': 'block',
 						'width': 'auto',
 						'max-width': self.element.outerWidth()
 					}).append('<span class="nub"></span>');
-					$("body").append(self.tooltip)
+					$("body").append(self.tooltip.element)
 					setTimeout(function() {
-						self.tooltip.remove();
+						self.tooltip.element.remove();
 						self.tooltipShowing = false;
-					}, self.tooltipTTL);
+					}, self.tooltip.ttl);
 				}
 				return false;
 			}
