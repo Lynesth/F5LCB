@@ -49,6 +49,11 @@
 				}
 			}
 
+			self.tooltipShowing = false;
+			self.tooltipTTL = options.tooltipTTL || 2000;
+			self.showTooltip = options.showTooltip === false ? false : true;
+			self.tooltipText = options.tooltipText || "This button needs to be kept pressed in order to work !";
+
 			self.callback = options.callback || null;
 			self.resetOnMouseUp = options.resetOnMouseUp === false ? false : true;
 
@@ -83,11 +88,15 @@
 					});
 					return false; // Prevent draging and failed mouseup
 				}
-			}).click(function() {
+			}).click(function(e) {
+				if (self.showTooltip && (parseInt(self.progBar[0].style.width) * self.timer) / 100 < 200) {
+					return self.getTooltip(self.element);
+				}
 				if (!self.complete || self.callback != null) {
 					return false;
 				}
 			});
+
 
 			$(document).on('mouseup', function() {
 				self.progBar.stop();
@@ -100,6 +109,28 @@
 					}
 				}
 			});
+
+
+			self.getTooltip = function(element) {
+				if (!self.tooltipShowing) {
+					var offset = self.element.offset();
+					self.tooltipShowing = true;
+					self.tooltip = $('<div />', { class: "tooltip", text: self.tooltipText });
+					self.tooltip.css({
+						'top': offset.top + self.element.outerHeight() + 10,
+						'left': offset.left + 10,
+						'display': 'block',
+						'width': 'auto',
+						'max-width': self.element.outerWidth()
+					}).append('<span class="nub"></span>');
+					$("body").append(self.tooltip)
+					setTimeout(function() {
+						self.tooltip.remove();
+						self.tooltipShowing = false;
+					}, self.tooltipTTL);
+				}
+				return false;
+			}
 
 		}
 
