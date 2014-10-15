@@ -132,7 +132,7 @@
 						'left': offset.left + 10,
 						'display': 'block',
 						'width': 'auto',
-						'max-width': self.element.outerWidth()
+						'max-width': self.element.outerWidth() > 200 ? self.element.outerWidth() : "200px"
 					}).append('<span class="nub"></span>');
 					$("body").append(self.tooltip.element)
 					setTimeout(function() {
