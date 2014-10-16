@@ -4,7 +4,7 @@
  * @author Robin "Lynesth" GOMES
  * @mail lyn@tweefox.nc
  * 
- * ** THIS PLUGIN IS IN DEVELOPMENT -- VERY EARLY STAGE ** *
+ * ** THIS PLUGIN IS IN DEVELOPMENT -- EARLY STAGE ** *
  */
 
 (function($) {
@@ -83,7 +83,7 @@
 			self.progBar = self.element.children("div."+self.progBarClass).children('.meter');
 
 
-			self.element.on('mousedown', function() {
+			self.element.on('mousedown touchstart', function() {
 				if (!self.complete) {
 					var timer = self.resetOnMouseUp ? self.timer : ((100 - parseInt(self.progBar[0].style.width)) * self.timer) / 100;
 					self.progBar.stop();
@@ -98,7 +98,7 @@
 					});
 					return false; // Prevent draging and failed mouseup
 				}
-			}).click(function(e) {
+			}).on('click touchleave', function(e) {
 				if (self.tooltip.show && (parseInt(self.progBar[0].style.width) * self.timer) / 100 < 100) {
 					e.preventDefault();
 					return self.getTooltip(self.element);
@@ -109,7 +109,7 @@
 			});
 
 
-			$(document).on('mouseup', function() {
+			$(document).on('mouseup touchend touchcancel', function() {
 				self.progBar.stop();
 				if (self.progBar[0].style.width != "100%") {
 					if (self.resetOnMouseUp == false) {
